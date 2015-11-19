@@ -1,0 +1,50 @@
+* {
+  color: rgb(237,247,242);
+}
+
+nav {
+  background-color: rgb(127,199,189);
+  height: 20vh;
+}
+
+body {
+  background-color: rgb(76,182,194);
+}
+
+.nav {
+  padding-left: 40px;
+}
+
+.tab a {
+  background-color: rgb(181,230,85);
+  width: 10rem;
+  height: 5rem;
+  padding: 0 !important;
+  text-align: center;
+}
+
+.tab a:hover {
+  background-color: rgb(112,151,33) !important;
+}
+
+.tab.active a {
+  background-color: rgb(149,201,44) !important;
+}
+
+.tab-icon {
+  fill: rgb(237,247,242);
+}
+
+.tab-content {
+  padding: 20px;
+}
+
+.btn-primary {
+  background-color: rgb(149,201,44);
+  border-color: rgb(237,247,242);
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+  background-color: rgb(112,151,33) !important;
+  border-color: rgb(237,247,242);
+}
