@@ -1,5 +1,4 @@
 (function() {
-
   angular.module('app.navigation', []);
   angular.module('app.signin', []);
   angular.module('app.users', []);
@@ -8,11 +7,13 @@
     'ngResource'
   ]);
 
+  angular.module('app.utilities', []);
+
   angular.module('app', [
     'app.navigation',
     'app.signin',
     'app.users',
-    'app.resources'
+    'app.resources',
+    'app.utilities'
   ]);
-
 })();
