@@ -1,5 +1,4 @@
 (function() {
-
   angular
     .module('app.resources')
     .factory('UsersService', [
@@ -10,5 +9,4 @@
   function UsersService($resource) {
     return $resource('/api/users/:id');
   }
-
 })();

@@ -4,6 +4,10 @@ class UserPolicy < ApplicationPolicy
     nurse? || admin?
   end
 
+  def create?
+    admin?
+  end
+
   class Scope < Scope
     def resolve
       if admin?

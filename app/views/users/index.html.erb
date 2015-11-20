@@ -1,3 +1,102 @@
 <div ng-controller="UsersController" ng-init="init()">
-  {{users}}
+
+  <% if current_user.role == 'admin' %>
+    <ul class="nav nav-tabs">
+      <li class="tab" ng-class="{ active: isPatientsTabActive }">
+        <a href="#" ng-click="onTabClick('patient', $event)">
+          <span>Patients</span>
+        </a>
+      </li>
+      <li class="tab" ng-class="{ active: isNursesTabActive }">
+        <a href="#" ng-click="onTabClick('nurse', $event)">
+          <span>Nurses</span>
+        </a>
+      </li>
+      <li class="tab tab-right" ng-class="{ active: isAddNewTabActive }">
+        <a href="#" ng-click="onTabClick('addNew', $event)">
+          <span>Add New</span>
+        </a>
+      </li>
+    </ul>
+  <% end %>
+
+  <div class="users-list" ng-hide="isAddNewTabActive">
+    <div class="user-container" ng-repeat="user in users">
+      <div class="user-tile">
+        <a href="#" ng-click="$event.preventDefault()">
+          <div class="tile-shown">
+            <%= embedded_svg "icons/account_circle.svg" %>
+          </div>
+          <div class="tile-hidden">
+            <h3>
+              <span ng-if="user.role != 'patient'"><strong>{{user.role | capitalize}}</strong></span>
+              {{user.first_name}}
+            </h3>
+            <h3 class="last-name">
+              {{user.last_name}}
+            </h3>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="new-user-form" ng-show="isAddNewTabActive">
+    <form name="newUserForm" ng-submit="onNewUserFormSubmit(newUserForm.$valid)" novalidate>
+      <div class="form-group">
+        <select
+          class="form-control"
+          name="role"
+          required
+          ng-options="role | capitalize for role in roles"
+          ng-model="user.role"></select>
+      </div>
+      <div class="form-group">
+        <select
+          class="form-control"
+          name="hospital"
+          required
+          ng-options="hospital.id as hospital.name for hospital in hospitals"
+          ng-model="user.hospital_id"></select>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          name="first_name"
+          required
+          ng-model="user.first_name"
+          placeholder="Enter a first name">
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          name="last_name"
+          required
+          ng-model="user.last_name"
+          placeholder="Enter a last name">
+      </div>
+      <div class="form-group">
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          required
+          ng-model="user.email"
+          placeholder="Enter an email address">
+      </div>
+      <div class="form-group" ng-if="user.role == 'patient'">
+        <input
+          type="text"
+          class="form-control"
+          name="roomNumber"
+          ng-model="user.room_number"
+          placeholder="Enter patient room number">
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" ng-disabled="newUserForm.$invalid">Submit</button>
+      </div>
+    </form>
+  </div>
 </div>

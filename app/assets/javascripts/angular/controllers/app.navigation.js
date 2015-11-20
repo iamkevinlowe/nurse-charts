@@ -10,10 +10,6 @@
 
   function NavigationController($scope, $window, SessionsService) {
 
-    $scope.init = function(user) {
-      $scope.user = user;
-    };
-
     $scope.onRootClick = function(e) {
       if (e) { e.preventDefault(); }
 
