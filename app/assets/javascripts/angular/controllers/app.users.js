@@ -1,5 +1,4 @@
 (function() {
-
   angular
     .module('app.users')
     .controller('UsersController', [
@@ -14,7 +13,6 @@
       UsersService.query(
         {},
         function onSuccess(response) {
-          console.log(response);
           $scope.users = response;
         }, function onError(response) {
           console.log(response);
@@ -23,5 +21,4 @@
     }
 
   }
-
 })();

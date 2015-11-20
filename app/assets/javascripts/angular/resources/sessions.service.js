@@ -1,5 +1,4 @@
 (function() {
-
   angular
     .module('app.resources')
     .factory('SessionsService', [
@@ -8,7 +7,6 @@
     ]);
 
   function SessionsService($resource) {
-    return $resource('/users/sign_in/:id');
+    return $resource('/session/:id');
   }
-
 })();

@@ -1,5 +1,4 @@
 (function() {
-
   angular
     .module('app.signin')
     .controller('SignInController', [
@@ -56,6 +55,6 @@
         console.log($scope.patient);
       }
     };
+    
   }
-
 })();

@@ -4,11 +4,60 @@
 
 nav {
   background-color: rgb(127,199,189);
-  height: 20vh;
+  height: 120px;
 }
 
 body {
   background-color: rgb(76,182,194);
+}
+
+svg {
+  fill: rgb(237,247,242);
+}
+
+.logo-main {
+  height: 100px;
+  width: 100px;
+}
+
+.logo-user {
+  height: 75px;
+  width: 75px;
+  margin: 22.5px 22.5px 0 0;
+}
+
+.logo-role {
+  position: relative;
+  top: 12px;
+}
+
+.pull-right > .dropdown-menu {
+  right: 25px;
+  background-color: rgb(181,230,85);
+}
+
+.dropdown-menu > li > a {
+  color: rgb(237,247,242);
+}
+
+.dropdown-menu > li > a:hover {
+  color: rgb(237,247,242);
+  background-color: rgb(112,151,33);
+}
+
+.user-info {
+  text-align: right;
+  margin-right: 10px;
+}
+
+.user-info .user-name {
+  font-size: 2rem;
+  margin-bottom: 0;
+}
+
+.nav-logo {
+  text-align: center;
+  padding-top: 10px;
 }
 
 .nav {
@@ -29,10 +78,6 @@ body {
 
 .tab.active a {
   background-color: rgb(149,201,44) !important;
-}
-
-.tab-icon {
-  fill: rgb(237,247,242);
 }
 
 .tab-content {
