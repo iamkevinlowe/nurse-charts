@@ -18,13 +18,14 @@
       <div class="user-info pull-right">
         <% if current_user.role == 'admin' %>
           <%= embedded_svg "icons/supervisor_account.svg", class: 'logo-role' %>
-        <% elsif current_user.role == 'nurse' %>
+        <% elsif current_user.role == 'nurse' || current_user.role == 'doctor' %>
           <%= embedded_svg "icons/local_hospital.svg", class: 'logo-role' %>
         <% elsif current_user.role == 'patient' %>
           <%= embedded_svg "icons/account_box.svg", class: 'logo-role' %>
         <% end %>
         <p class="user-name">
-          <%= current_user.role.capitalize %> - <%= current_user.first_name %> <%= current_user.last_name %>
+          <strong><%= current_user.role.capitalize %></strong>
+          <%= current_user.first_name %> <%= current_user.last_name %>
         </p>
         <p>
           <%= current_user.hospital.name %>

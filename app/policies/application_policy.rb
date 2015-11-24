@@ -52,6 +52,10 @@ class ApplicationPolicy
 
     private
 
+    def doctor?
+      user && user.role == 'doctor'
+    end
+
     def admin?
       user && user.role == 'admin'
     end
@@ -62,6 +66,10 @@ class ApplicationPolicy
   end
 
   private
+
+  def doctor?
+    user && user.role == 'doctor'
+  end
 
   def admin?
     user && user.role == 'admin'

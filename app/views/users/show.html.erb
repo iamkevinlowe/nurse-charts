@@ -1,0 +1,103 @@
+<div class="row user-view" ng-controller="UserViewController" ng-init="init('<%= @id %>')">
+  <div class="col-sm-4 user-view-tile">
+    <div class="user-avatar">
+      <%= embedded_svg "icons/account_circle.svg" %>
+    </div>
+
+    <div class="user-glance-detail">
+      <h3>
+        <span ng-if="user.role != 'patient'"><strong>{{user.role | capitalize}}</strong></span>
+        {{user.first_name}}
+      </h3>
+      <h3 class="last-name">
+        {{user.last_name}}
+      </h3>
+    </div>
+
+    <div class="user-detail">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    </div>
+  </div>
+
+  <div ng-if="user.role == 'patient'" class="col-sm-8">
+    <div class="user-view-tabs">
+      <ul class="nav nav-tabs">
+        <li class="tab" ng-class="{ active: isCareplanTabActive }">
+          <a href="#" ng-click="onTabClick('careplan', $event)">
+            <span>Careplan</span>
+          </a>
+        </li>
+        <li ng-if="'<%= current_user.role %>' == 'nurse' || '<%= current_user.role %>' == 'doctor'" class="tab" ng-class="{ active: isReportTabActive }">
+          <a href="#" ng-click="onTabClick('report', $event)">
+            <span>Report</span>
+          </a>
+        </li>
+        <li class="tab" ng-class="{ active: isHistoryTabActive }">
+          <a href="#" ng-click="onTabClick('history', $event)">
+            <span>History</span>
+          </a>
+        </li>
+        <li class="tab" ng-class="{ active: isVitalsTabActive }">
+          <a href="#" ng-click="onTabClick('vitals', $event)">
+            <span>Vitals</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="tab-content" ng-show="isCareplanTabActive">
+      <div ng-if="'<%= current_user.role %>' == 'doctor'" class="new-plan-form">
+        <form name="newIssueForm" ng-submit="onNewIssueSubmit(newIssueForm.$valid)" novalidate>
+          <div class="form-group">
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              required
+              ng-model="careplan.newIssue.name"
+              placeholder="Enter the issue"
+              tabIndex="1">
+          </div>
+          <div class="form-group" ng-repeat="goal in careplan.newIssue.goals">
+            <button class="btn btn-primary button-add-goal" ng-hide="showAddGoal(goal)" ng-click="removeGoal(goal)" tabIndex="{{goal.id + 2}}">
+              <%= embedded_svg "icons/remove.svg" %>
+            </button>
+            <button class="btn btn-primary button-add-goal" ng-show="showAddGoal(goal)" ng-click="addGoal()" tabIndex="{{goal.id + 2}}">
+              <%= embedded_svg "icons/add.svg" %>
+            </button>
+            <span><input
+              type="text"
+              name="activity"
+              class="form-control"
+              required
+              ng-model="goal.activity"
+              placeholder="Enter goal or activity"
+              tabIndex="{{goal.id + 1}}"></span>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary" ng-disabled="newIssueForm.$invalid">Submit</button>
+          </div>
+        </form>
+      </div>
+      <div ng-repeat="issue in issues">
+        <p><strong>{{issue.name}}</strong></p>
+        <ul>
+          <li ng-repeat="goal in issue.goals"><p>{{goal.activity}}</p></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tab-content" ng-show="isReportTabActive">
+      Report
+    </div>
+
+    <div class="tab-content" ng-show="isHistoryTabActive">
+      History
+    </div>
+
+    <div class="tab-content" ng-show="isVitalsTabActive">
+      Vitals
+    </div>
+  </div>
+  
+</div>

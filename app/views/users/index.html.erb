@@ -1,6 +1,6 @@
-<div ng-controller="UsersController" ng-init="init()">
+<div ng-controller="UsersController" ng-init="init('<%= current_user.role %>')">
 
-  <% if current_user.role == 'admin' %>
+  <% if current_user.role == 'admin' || current_user.role == 'doctor' %>
     <ul class="nav nav-tabs">
       <li class="tab" ng-class="{ active: isPatientsTabActive }">
         <a href="#" ng-click="onTabClick('patient', $event)">
@@ -23,7 +23,7 @@
   <div class="users-list" ng-hide="isAddNewTabActive">
     <div class="user-container" ng-repeat="user in users">
       <div class="user-tile">
-        <a href="#" ng-click="$event.preventDefault()">
+        <a ng-href="/users/{{user.id}}">
           <div class="tile-shown">
             <%= embedded_svg "icons/account_circle.svg" %>
           </div>

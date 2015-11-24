@@ -1,7 +1,11 @@
 class UserPolicy < ApplicationPolicy
 
   def index?
-    nurse? || admin?
+    nurse? || admin? || doctor?
+  end
+
+  def show?
+    index?
   end
 
   def create?
@@ -10,7 +14,7 @@ class UserPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      if admin?
+      if admin? || doctor?
         scope.where(role: ['nurse', 'patient'])
       elsif nurse?
         scope.where("role = ?", 'patient')

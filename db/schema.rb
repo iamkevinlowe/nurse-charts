@@ -11,7 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151120220735) do
+ActiveRecord::Schema.define(version: 20151123233400) do
+
+  create_table "careplans", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "careplans", ["user_id"], name: "index_careplans_on_user_id"
+
+  create_table "goals", force: :cascade do |t|
+    t.string   "activity"
+    t.integer  "issue_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "goals", ["issue_id"], name: "index_goals_on_issue_id"
 
   create_table "hospitals", force: :cascade do |t|
     t.string   "name"
@@ -19,6 +36,15 @@ ActiveRecord::Schema.define(version: 20151120220735) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "issues", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "careplan_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "issues", ["careplan_id"], name: "index_issues_on_careplan_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"

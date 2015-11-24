@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
 
-  # devise_for :users, controllers: {
-  #   sessions: 'sessions',
-  #   registrations: 'registrations'
-  # }
+  devise_for :users, controllers: {
+    sessions: 'sessions'
+  }
 
   devise_scope :user do
     post '/session', to: 'sessions#create'
@@ -17,10 +16,10 @@ Rails.application.routes.draw do
     end  
   end
 
- 
+  resources :users, only: :show
 
   namespace :api do
-    resources :users, only: [:index, :create]
+    resources :users, only: [:index, :show, :create]
     resources :hospitals, only: [:index, :show]
   end
 

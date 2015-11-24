@@ -13,7 +13,7 @@
     var allUsers;
     $scope.roles = ['patient', 'nurse'];
 
-    $scope.init = function() {
+    $scope.init = function(role) {
       UsersService.query(
         {},
         function onSuccess(response) {
@@ -25,15 +25,17 @@
         }
       );
 
-      HospitalsService.query(
-        {},
-        function onSuccess(response) {
-          $scope.hospitals = response;
-          resetUser();
-        }, function onError(response) {
-          console.log(response);
-        }
-      );
+      if (role == 'admin') {
+        HospitalsService.query(
+          {},
+          function onSuccess(response) {
+            $scope.hospitals = response;
+            resetUser();
+          }, function onError(response) {
+            console.log(response);
+          }
+        );
+      }
     };
 
     $scope.onTabClick = function(role, e) {
@@ -43,19 +45,23 @@
       $scope.isPatientsTabActive = false;
       $scope.isAddNewTabActive = false;
 
-      if (role == 'addNew') {
-        $scope.isAddNewTabActive = true;
-      } else {
-        $scope.users = allUsers.filter(function(user) {
-          return user.role == role;
-        });
-
-        if (role == 'nurse') {
+      switch (role) {
+        case 'addNew':
+          $scope.isAddNewTabActive = true;
+          break;
+        case 'nurse':
           $scope.isNursesTabActive = true;
-        } else if (role == 'patient') {
+          break;
+        case 'patient':
           $scope.isPatientsTabActive = true;
-        }
+          break;
+        default:
+          console.log('Tab click out of bounds.');
       }
+
+      $scope.users = allUsers.filter(function(user) {
+        return user.role == role;
+      });
     };
 
     $scope.onNewUserFormSubmit = function(valid) {

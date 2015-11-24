@@ -6,6 +6,12 @@ class Api::UsersController < ApplicationController
     render json: users
   end
 
+  def show
+    user = User.find(params[:id])
+    authorize user
+    render json: user
+  end
+
   def create
     user = User.new(user_params)
     user.password = 'welcome1'

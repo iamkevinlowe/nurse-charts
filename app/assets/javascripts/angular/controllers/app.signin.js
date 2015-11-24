@@ -5,10 +5,11 @@
       '$scope',
       '$window',
       'SessionsService',
+      'UsersService',
       SignInController
     ]);
 
-  function SignInController($scope, $window, SessionsService) {
+  function SignInController($scope, $window, SessionsService, UsersService) {
 
     $scope.init = function() {
       $scope.onMedicalTabClick();
@@ -53,6 +54,14 @@
         );
       } else {
         console.log($scope.patient);
+        // UsersService.get(
+        //   {},
+        //   function onSuccess(response) {
+        //     console.log(response);
+        //   }, function onError(response) {
+        //     console.log('error', response);
+        //   }
+        // );
       }
     };
     
