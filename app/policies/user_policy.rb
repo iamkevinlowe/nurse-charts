@@ -9,15 +9,15 @@ class UserPolicy < ApplicationPolicy
   end
 
   def create?
-    admin?
+    admin? || doctor?
   end
 
   class Scope < Scope
     def resolve
       if admin? || doctor?
-        scope.where(role: ['nurse', 'patient'])
+        scope.where(role: ['nurse', 'patient']).includes(careplan: [issues: [:goals]])
       elsif nurse?
-        scope.where("role = ?", 'patient')
+        scope.where("role = ?", 'patient').includes(careplan: [issues: [:goals]])
       end
     end
   end

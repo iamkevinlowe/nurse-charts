@@ -25,7 +25,7 @@
         }
       );
 
-      if (role == 'admin') {
+      if (role == 'admin' || role == 'doctor') {
         HospitalsService.query(
           {},
           function onSuccess(response) {

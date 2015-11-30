@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   namespace :api do
     resources :users, only: [:index, :show, :create]
     resources :hospitals, only: [:index, :show]
+    resources :careplans, only: :create
+    resources :issues, only: :create
+    resources :goals, only: :create
   end
 
 end

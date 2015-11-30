@@ -5,4 +5,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :hospital
+  has_one :careplan
+
+  def as_json(options = {})
+    super(
+      include: { careplan: { include: { issues: { include: :goals } } } }
+    )
+  end
 end

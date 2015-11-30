@@ -1,7 +1,7 @@
 class HospitalPolicy < ApplicationPolicy
 
   def index?
-    admin?
+    admin? || doctor?
   end
 
   def show?

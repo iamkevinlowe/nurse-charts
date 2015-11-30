@@ -54,15 +54,15 @@
               name="name"
               class="form-control"
               required
-              ng-model="careplan.newIssue.name"
+              ng-model="user.careplan.newIssue.name"
               placeholder="Enter the issue"
               tabIndex="1">
           </div>
-          <div class="form-group" ng-repeat="goal in careplan.newIssue.goals">
-            <button class="btn btn-primary button-add-goal" ng-hide="showAddGoal(goal)" ng-click="removeGoal(goal)" tabIndex="{{goal.id + 2}}">
+          <div class="form-group" ng-repeat="goal in user.careplan.newIssue.goals">
+            <button class="btn btn-primary button-add-goal" ng-hide="showAddGoal(goal)" ng-click="removeGoal(goal)" tabIndex="{{goal.id + 3}}">
               <%= embedded_svg "icons/remove.svg" %>
             </button>
-            <button class="btn btn-primary button-add-goal" ng-show="showAddGoal(goal)" ng-click="addGoal()" tabIndex="{{goal.id + 2}}">
+            <button class="btn btn-primary button-add-goal" ng-show="showAddGoal(goal)" ng-click="addGoal()" tabIndex="{{goal.id + 3}}">
               <%= embedded_svg "icons/add.svg" %>
             </button>
             <span><input
@@ -72,14 +72,17 @@
               required
               ng-model="goal.activity"
               placeholder="Enter goal or activity"
-              tabIndex="{{goal.id + 1}}"></span>
+              tabIndex="{{goal.id + 2}}"></span>
           </div>
           <div class="form-group">
-            <button class="btn btn-primary" ng-disabled="newIssueForm.$invalid">Submit</button>
+            <button
+              class="btn btn-primary"
+              ng-disabled="newIssueForm.$invalid"
+              tabIndex="{{user.careplan.newIssue.goals.length + 3}}">Submit</button>
           </div>
         </form>
       </div>
-      <div ng-repeat="issue in issues">
+      <div ng-repeat="issue in user.careplan.issues">
         <p><strong>{{issue.name}}</strong></p>
         <ul>
           <li ng-repeat="goal in issue.goals"><p>{{goal.activity}}</p></li>
