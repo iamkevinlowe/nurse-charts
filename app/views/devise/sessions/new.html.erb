@@ -22,7 +22,7 @@
             type="text"
             name="email"
             class="form-control"
-            placeholder="Enter Username"
+            placeholder="Enter Email Address"
             ng-model="user.email"
           >
           <input
@@ -31,7 +31,7 @@
             name="roomNumber"
             class="form-control"
             placeholder="Enter Room Number"
-            ng-model="patient.roomNumber">
+            ng-model="patient.room_number">
         </div>
 
         <div class="form-group">
@@ -46,10 +46,20 @@
           <input
             ng-if="isPatientTabActive"
             type="text"
-            name="fullName"
+            name="firstName"
             class="form-control"
-            placeholder="Enter Patient name"
-            ng-model="patient.fullName"
+            placeholder="Patient's First Name"
+            ng-model="patient.first_name"
+          >
+        </div>
+
+        <div class="form-group" ng-if="isPatientTabActive">
+          <input
+            type="text"
+            name="lastName"
+            class="form-control"
+            placeholder="Patient's Last Name"
+            ng-model="patient.last_name"
           >
         </div>
 

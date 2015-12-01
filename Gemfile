@@ -37,3 +37,6 @@ group :development do
   gem 'bullet'
 end
 
+group :test do
+  gem 'shoulda-matchers'
+end

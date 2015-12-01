@@ -45,62 +45,10 @@
       </ul>
     </div>
 
-    <div class="tab-content" ng-show="isCareplanTabActive">
-      <div ng-if="'<%= current_user.role %>' == 'doctor'" class="new-plan-form">
-        <form name="newIssueForm" ng-submit="onNewIssueSubmit(newIssueForm.$valid)" novalidate>
-          <div class="form-group">
-            <input
-              type="text"
-              name="name"
-              class="form-control"
-              required
-              ng-model="user.careplan.newIssue.name"
-              placeholder="Enter the issue"
-              tabIndex="1">
-          </div>
-          <div class="form-group" ng-repeat="goal in user.careplan.newIssue.goals">
-            <button class="btn btn-primary button-add-goal" ng-hide="showAddGoal(goal)" ng-click="removeGoal(goal)" tabIndex="{{goal.id + 3}}">
-              <%= embedded_svg "icons/remove.svg" %>
-            </button>
-            <button class="btn btn-primary button-add-goal" ng-show="showAddGoal(goal)" ng-click="addGoal()" tabIndex="{{goal.id + 3}}">
-              <%= embedded_svg "icons/add.svg" %>
-            </button>
-            <span><input
-              type="text"
-              name="activity"
-              class="form-control"
-              required
-              ng-model="goal.activity"
-              placeholder="Enter goal or activity"
-              tabIndex="{{goal.id + 2}}"></span>
-          </div>
-          <div class="form-group">
-            <button
-              class="btn btn-primary"
-              ng-disabled="newIssueForm.$invalid"
-              tabIndex="{{user.careplan.newIssue.goals.length + 3}}">Submit</button>
-          </div>
-        </form>
-      </div>
-      <div ng-repeat="issue in user.careplan.issues">
-        <p><strong>{{issue.name}}</strong></p>
-        <ul>
-          <li ng-repeat="goal in issue.goals"><p>{{goal.activity}}</p></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="tab-content" ng-show="isReportTabActive">
-      Report
-    </div>
-
-    <div class="tab-content" ng-show="isHistoryTabActive">
-      History
-    </div>
-
-    <div class="tab-content" ng-show="isVitalsTabActive">
-      Vitals
-    </div>
+    <%= render partial: "users/components/careplan" %> 
+    <%= render partial: "users/components/report" %>
+    <%= render partial: "users/components/history" %>
+    <%= render partial: "users/components/vitals" %>
   </div>
   
 </div>

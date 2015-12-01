@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123233400) do
+ActiveRecord::Schema.define(version: 20151130211730) do
 
   create_table "careplans", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "careplans", ["user_id"], name: "index_careplans_on_user_id"
+  add_index "careplans", ["patient_id"], name: "index_careplans_on_patient_id"
 
   create_table "goals", force: :cascade do |t|
     t.string   "activity"
@@ -46,6 +46,29 @@ ActiveRecord::Schema.define(version: 20151123233400) do
 
   add_index "issues", ["careplan_id"], name: "index_issues_on_careplan_id"
 
+  create_table "patients", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "room_number"
+    t.integer  "hospital_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "patients", ["hospital_id"], name: "index_patients_on_hospital_id"
+
+  create_table "reports", force: :cascade do |t|
+    t.integer  "issue_id"
+    t.integer  "patients_id"
+    t.integer  "alert"
+    t.text     "notes"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "reports", ["issue_id"], name: "index_reports_on_issue_id"
+  add_index "reports", ["patients_id"], name: "index_reports_on_patients_id"
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -61,11 +84,10 @@ ActiveRecord::Schema.define(version: 20151123233400) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.integer  "hospital_id"
-    t.string   "room_number"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["hospital_id"], name: "hospital_id"
+  add_index "users", ["hospital_id"], name: "index_users_on_hospital_id"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

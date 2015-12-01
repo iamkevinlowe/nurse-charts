@@ -1,4 +1,4 @@
 class Careplan < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :patient
   has_many :issues, dependent: :destroy
 end

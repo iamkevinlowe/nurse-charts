@@ -6,10 +6,17 @@
       '$window',
       'SessionsService',
       'UsersService',
+      'PatientsFindService',
       SignInController
     ]);
 
-  function SignInController($scope, $window, SessionsService, UsersService) {
+  function SignInController(
+    $scope,
+    $window,
+    SessionsService,
+    UsersService,
+    PatientsFindService
+  ) {
 
     $scope.init = function() {
       $scope.onMedicalTabClick();
@@ -52,16 +59,19 @@
             console.log(error);
           }
         );
-      } else {
-        console.log($scope.patient);
-        // UsersService.get(
-        //   {},
-        //   function onSuccess(response) {
-        //     console.log(response);
-        //   }, function onError(response) {
-        //     console.log('error', response);
-        //   }
-        // );
+      } else if ($scope.isPatientTabActive) {
+        PatientsFindService.find(
+          $scope.patient,
+          function onSuccess(response) {
+            if (response.id) {
+              $window.location.href = '/patients/' + response.id
+            } else {
+              console.log("No result");
+            }
+          }, function onError(response) {
+            console.log('Error', response);
+          }
+        );
       }
     };
     

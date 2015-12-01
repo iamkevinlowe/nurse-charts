@@ -11,14 +11,23 @@ end
 
 hospitals = Hospital.all
 
-50.times do
+25.times do
   User.create!(
     first_name:     Faker::Name.first_name,
     last_name:      Faker::Name.last_name,
-    role:           ['admin', 'nurse', 'patient'].sample,
+    role:           ['admin', 'nurse', 'doctor'].sample,
     email:          Faker::Internet.safe_email,
     password:       'helloworld',
-    hospital:   hospitals.sample
+    hospital:       hospitals.sample
+  )
+end
+
+25.times do
+  Patient.create!(
+    first_name:     Faker::Name.first_name,
+    last_name:      Faker::Name.last_name,
+    hospital:       hospitals.sample,
+    room_number:    (rand * 300 + 1).floor
   )
 end
 
@@ -29,7 +38,7 @@ if User.where("email = ?", 'user@example.com').blank?
     role:           'admin',
     email:          'user@example.com',
     password:       'helloworld',
-    hospital:   hospitals.sample
+    hospital:       hospitals.sample
   )
 end
 

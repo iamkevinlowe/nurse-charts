@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: :show
+  resources :patients, only: :show
 
   namespace :api do
     resources :users, only: [:index, :show, :create]
@@ -24,6 +25,9 @@ Rails.application.routes.draw do
     resources :careplans, only: :create
     resources :issues, only: :create
     resources :goals, only: :create
+    resources :reports, only: :create
+    resources :patients, only: [:index, :create]
+    post 'patients/find', to: 'patients#find'
   end
 
 end

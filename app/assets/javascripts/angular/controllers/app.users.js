@@ -4,38 +4,30 @@
     .controller('UsersController', [
       '$scope',
       'UsersService',
+      'PatientsService',
       'HospitalsService',
       UsersController
     ]);
 
-  function UsersController($scope, UsersService, HospitalsService) {
+  function UsersController(
+    $scope,
+    UsersService,
+    PatientsService,
+    HospitalsService
+  ) {
 
-    var allUsers;
+    $scope.newUser = {};
     $scope.roles = ['patient', 'nurse'];
 
     $scope.init = function(role) {
-      UsersService.query(
-        {},
-        function onSuccess(response) {
-          allUsers = response;
-
-          $scope.onTabClick('patient');
-        }, function onError(response) {
-          console.log(response);
-        }
-      );
-
+      getPatients();
+      
       if (role == 'admin' || role == 'doctor') {
-        HospitalsService.query(
-          {},
-          function onSuccess(response) {
-            $scope.hospitals = response;
-            resetUser();
-          }, function onError(response) {
-            console.log(response);
-          }
-        );
+        getUsers();
+        getHospitals();
       }
+
+      $scope.onTabClick('patient');
     };
 
     $scope.onTabClick = function(role, e) {
@@ -58,33 +50,74 @@
         default:
           console.log('Tab click out of bounds.');
       }
-
-      $scope.users = allUsers.filter(function(user) {
-        return user.role == role;
-      });
     };
 
     $scope.onNewUserFormSubmit = function(valid) {
       if (valid) {
-        if ($scope.user.role == 'nurse') {
-          $scope.user.room_number = null;
+        if ($scope.newUser.role == 'nurse') {
+          UsersService.save(
+            {
+              user: $scope.user
+            },
+            function onSuccess(response) {
+              allUsers.push(response);
+              resetUser();
+            }, function onError(response) {
+              console.log(response);
+            }
+          );
+        } else if ($scope.newUser.role == 'patient') {
+          PatientsService.save(
+            {
+              patient: $scope.newUser
+            },
+            function onSuccess(response) {
+              console.log(response);
+            }, function onError(response) {
+              console.log(response);
+            }
+          );
         }
-        UsersService.save(
-          {
-            user: $scope.user
-          },
-          function onSuccess(response) {
-            allUsers.push(response);
-            resetUser();
-          }, function onError(response) {
-            console.log(response);
-          }
-        );
+        
       }
     };
 
+    function getPatients() {
+      PatientsService.query(
+        {},
+        function onSuccess(response) {
+          $scope.patients = response;
+        }, function onError(response) {
+          console.log('Error', response);
+        }
+      );
+    }
+
+    function getUsers() {
+      UsersService.query(
+        {},
+        function onSuccess(response) {
+          $scope.users = response;
+        }, function onError(response) {
+          console.log('Error', response);
+        }
+      );
+    }
+
+    function getHospitals() {
+      HospitalsService.query(
+        {},
+        function onSuccess(response) {
+          $scope.hospitals = response;
+          resetUser();
+        }, function onError(response) {
+          console.log(response);
+        }
+      );
+    }
+
     function resetUser() {
-      $scope.user = {
+      $scope.newUser = {
         role: $scope.roles[0],
         hospital_id: $scope.hospitals[0].id
       };
