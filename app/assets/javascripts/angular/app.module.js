@@ -3,6 +3,7 @@
   angular.module('app.signin', []);
   angular.module('app.users', []);
   angular.module('app.userView', []);
+  angular.module('app.patientView', []);
 
   angular.module('app.resources', [
     'ngResource'
@@ -15,6 +16,7 @@
     'app.signin',
     'app.users',
     'app.userView',
+    'app.patientView',
     'app.resources',
     'app.utilities'
   ]);

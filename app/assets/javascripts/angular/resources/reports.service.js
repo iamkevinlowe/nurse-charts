@@ -7,6 +7,6 @@
     ]);
 
   function ReportsService($resource) {
-    return $resource('/api/resources/:id');
+    return $resource('/api/reports/:id');
   }
 })();

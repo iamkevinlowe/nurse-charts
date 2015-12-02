@@ -1,0 +1,8 @@
+<div class="tab-content" ng-show="isHistoryTabActive">
+  <div class="history-box" ng-repeat="report in patient.reports">
+    <p><strong>{{report.user.proper_name}}</strong></p>
+    <p>{{formatDate(report.created_at)}}</p>
+    <p>{{report.issue.name}}</p>
+    <p>{{report.notes}}</p>
+  </div>
+</div>

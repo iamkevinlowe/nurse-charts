@@ -18,6 +18,12 @@ class Api::PatientsController < ApplicationController
     patient ? (render json: patient) : (head :no_content)
   end
 
+  def show
+    patient = Patient.find(params[:id])
+    authorize patient
+    render json: patient
+  end
+
   def create
     patient = Patient.new(patient_params)
     authorize patient

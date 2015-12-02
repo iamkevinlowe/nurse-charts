@@ -21,12 +21,12 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :users, only: [:index, :show, :create]
-    resources :hospitals, only: [:index, :show]
+    resources :hospitals, only: :index
     resources :careplans, only: :create
     resources :issues, only: :create
     resources :goals, only: :create
     resources :reports, only: :create
-    resources :patients, only: [:index, :create]
+    resources :patients, only: [:index, :show, :create]
     post 'patients/find', to: 'patients#find'
   end
 

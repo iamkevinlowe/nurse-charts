@@ -275,3 +275,12 @@ svg {
   display: block;
   overflow: hidden;
 }
+
+.report-label {
+  font-weight: bold;
+  text-align: right;
+}
+
+.history-box:not(:last-child) {
+  border-bottom: 1px solid rgb(237,247,242);
+}

@@ -10,7 +10,7 @@ class Api::CareplansController < ApplicationController
   private
 
   def careplan_params
-    params.require(:careplan).permit(:user_id)
+    params.require(:careplan).permit(:patient_id)
   end
 
 end

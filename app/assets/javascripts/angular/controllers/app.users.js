@@ -57,12 +57,13 @@
         if ($scope.newUser.role == 'nurse') {
           UsersService.save(
             {
-              user: $scope.user
+              user: $scope.newUser
             },
             function onSuccess(response) {
-              allUsers.push(response);
-              resetUser();
-            }, function onError(response) {
+              $scope.users.push(response);
+              resetNewUser();
+            },
+            function onError(response) {
               console.log(response);
             }
           );
@@ -72,13 +73,14 @@
               patient: $scope.newUser
             },
             function onSuccess(response) {
-              console.log(response);
-            }, function onError(response) {
+              $scope.patients.push(response);
+              resetNewUser();
+            },
+            function onError(response) {
               console.log(response);
             }
           );
         }
-        
       }
     };
 
@@ -87,7 +89,8 @@
         {},
         function onSuccess(response) {
           $scope.patients = response;
-        }, function onError(response) {
+        },
+        function onError(response) {
           console.log('Error', response);
         }
       );
@@ -98,7 +101,8 @@
         {},
         function onSuccess(response) {
           $scope.users = response;
-        }, function onError(response) {
+        },
+        function onError(response) {
           console.log('Error', response);
         }
       );
@@ -109,14 +113,15 @@
         {},
         function onSuccess(response) {
           $scope.hospitals = response;
-          resetUser();
-        }, function onError(response) {
+          resetNewUser();
+        },
+        function onError(response) {
           console.log(response);
         }
       );
     }
 
-    function resetUser() {
+    function resetNewUser() {
       $scope.newUser = {
         role: $scope.roles[0],
         hospital_id: $scope.hospitals[0].id

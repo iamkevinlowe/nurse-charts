@@ -1,1 +1,53 @@
-show.html.erb
+<div class="row user-view" ng-controller="PatientViewController" ng-init="init('<%= @id %>', '<%= current_user.id %>')">
+  <div class="col-sm-4 user-view-tile">
+    <div class="user-avatar">
+      <%= embedded_svg "icons/account_circle.svg" %>
+    </div>
+
+    <div class="user-glance-detail">
+      <h3>
+        {{patient.first_name}}
+      </h3>
+      <h3 class="last-name">
+        {{patient.last_name}}
+      </h3>
+    </div>
+
+    <div class="user-detail">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    </div>
+  </div>
+
+  <div class="col-sm-8">
+    <div class="user-view-tabs">
+      <ul class="nav nav-tabs">
+        <li class="tab" ng-class="{ active: isCareplanTabActive }">
+          <a href="#" ng-click="onTabClick('careplan', $event)">
+            <span>Careplan</span>
+          </a>
+        </li>
+        <li ng-if="'<%= current_user.role %>' == 'nurse' || '<%= current_user.role %>' == 'doctor' && patient.careplan.issues.length > 0" class="tab" ng-class="{ active: isReportTabActive }">
+          <a href="#" ng-click="onTabClick('report', $event)">
+            <span>Report</span>
+          </a>
+        </li>
+        <li class="tab" ng-class="{ active: isHistoryTabActive }">
+          <a href="#" ng-click="onTabClick('history', $event)">
+            <span>History</span>
+          </a>
+        </li>
+        <li class="tab" ng-class="{ active: isVitalsTabActive }">
+          <a href="#" ng-click="onTabClick('vitals', $event)">
+            <span>Vitals</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <%= render partial: "patients/components/careplan" %> 
+    <%= render partial: "patients/components/report" %>
+    <%= render partial: "patients/components/history" %>
+    <%= render partial: "patients/components/vitals" %>
+  </div>
+  
+</div>

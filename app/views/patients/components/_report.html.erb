@@ -1,0 +1,45 @@
+<div class="tab-content" ng-show="isReportTabActive" ng-controller="PatientViewReportsController" ng-init="init()">
+  <form name="newReportForm" ng-submit="onNewReportSubmit(newReportForm.$valid)" novalidate>
+    <div class="row form-group">
+      <div class="col-sm-3">
+        <h5 class="report-label">Activity or Issue</h5>
+      </div>
+      <div class="col-sm-9">
+        <select
+          name="issue"
+          class="form-control"
+          required
+          ng-options="issue.id as issue.name for issue in patient.careplan.issues"
+          ng-model="patient.newReport.issue_id">
+        </select>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-sm-3">
+        <h5 class="report-label">Alert</h5>
+      </div>
+      <div class="col-sm-9">
+        <select
+          name="alert"
+          class="form-control"
+          ng-options="user.id as user.proper_name for user in users"
+          ng-model="patient.newReport.alert">
+          <option value="">No Alert</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <textarea
+        name="notes"
+        rows="4"
+        class="form-control"
+        placeholder="Enter any notes..."
+        ng-model="patient.newReport.notes"></textarea>
+    </div>
+    <div class="form-group">
+      <button
+        class="btn btn-primary"
+        ng-disabled="newReportForm.$invalid">Submit</button>
+    </div>
+  </form>
+</div>

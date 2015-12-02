@@ -1,15 +1,15 @@
 (function() {
   angular
-    .module('app.userView')
-    .controller('UserViewCareplanController', [
+    .module('app.patientView')
+    .controller('PatientViewCareplanController', [
       '$scope',
       'CareplansService',
       'IssuesService',
       'GoalsService',
-      UserViewCareplanController
+      PatientViewCareplanController
     ]);
 
-  function UserViewCareplanController(
+  function PatientViewCareplanController(
     $scope,
     CareplansService,
     IssuesService,
@@ -17,17 +17,19 @@
   ) {
 
     $scope.init = function() {
-      if ($scope.user.role == 'patient') {
-        $scope.user.careplan ? newIssue() : createCareplan($scope.userId);
-      }
+      $scope.$watchGroup(['patient', 'currentUser'], function(newValues, oldValues) {
+        if (newValues[0] && newValues[1] && newValues[1].role == 'doctor') {
+          $scope.patient.careplan ? newIssue() : createCareplan($scope.patient.id);
+        }
+      });
     };
 
     $scope.addGoal = function() {
-      $scope.user.careplan.newIssue.goals.push({id: $scope.user.careplan.newIssue.goals.length});
+      $scope.patient.careplan.newIssue.goals.push({id: $scope.patient.careplan.newIssue.goals.length});
     };
 
     $scope.removeGoal = function(goal) {
-      var goals = $scope.user.careplan.newIssue.goals;
+      var goals = $scope.patient.careplan.newIssue.goals;
       var i = goals.indexOf(goal);
       goals.splice(i, 1);
       for (; i < goals.length; i++) {
@@ -36,24 +38,24 @@
     };
 
     $scope.showAddGoal = function(goal) {
-      return goal.id == $scope.user.careplan.newIssue.goals.length - 1;
+      return goal.id == $scope.patient.careplan.newIssue.goals.length - 1;
     };
 
     $scope.onNewIssueSubmit = function(valid) {
       if (valid) {
-        $scope.user.careplan.newIssue.careplan_id = $scope.user.careplan.id;
-        createIssue(angular.copy($scope.user.careplan.newIssue));
+        $scope.patient.careplan.newIssue.careplan_id = $scope.patient.careplan.id;
+        createIssue(angular.copy($scope.patient.careplan.newIssue));
       }
     };
 
     function createCareplan(id) {
       CareplansService.save(
         {
-          careplan: { user_id: id }
+          careplan: { patient_id: id }
         },
         function onSuccess(response) {
-          $scope.user.careplan = response;
-          $scope.user.careplan.issues = [];
+          $scope.patient.careplan = response;
+          $scope.patient.careplan.issues = [];
           newIssue();
         },
         function onError(response) {
@@ -67,9 +69,9 @@
         { issue },
         function onSuccess(response) {
           response.goals = [];
-          $scope.user.careplan.issues.push(response);
+          $scope.patient.careplan.issues.push(response);
           
-          $scope.user.careplan.newIssue.goals.forEach(function(goal) {
+          $scope.patient.careplan.newIssue.goals.forEach(function(goal) {
             goal.issue_id = response.id;
             createGoal(angular.copy(goal));
           });
@@ -84,10 +86,10 @@
       GoalsService.save(
         { goal },
         function onSuccess(response) {
-          var issue = $scope.user.careplan.issues[$scope.user.careplan.issues.length - 1];
+          var issue = $scope.patient.careplan.issues[$scope.patient.careplan.issues.length - 1];
           issue.goals.push(response);
 
-          if (issue.goals.length == $scope.user.careplan.newIssue.goals.length) {
+          if (issue.goals.length == $scope.patient.careplan.newIssue.goals.length) {
             newIssue();
           }
         },
@@ -98,7 +100,7 @@
     }
 
     function newIssue() {
-      $scope.user.careplan.newIssue = {
+      $scope.patient.careplan.newIssue = {
         goals: [{ id: 0 }]
       };
     }

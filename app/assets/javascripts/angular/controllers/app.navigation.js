@@ -22,7 +22,7 @@
       SessionsService.delete(
         {},
         function onSuccess() {
-          $window.location.reload();
+          $scope.onRootClick();
         }
       );
     };

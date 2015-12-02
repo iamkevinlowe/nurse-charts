@@ -68,7 +68,8 @@
             } else {
               console.log("No result");
             }
-          }, function onError(response) {
+          },
+          function onError(response) {
             console.log('Error', response);
           }
         );
