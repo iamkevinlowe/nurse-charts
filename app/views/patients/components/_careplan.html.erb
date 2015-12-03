@@ -12,10 +12,10 @@
           tabIndex="1">
       </div>
       <div class="form-group" ng-repeat="goal in patient.careplan.newIssue.goals">
-        <button class="btn btn-primary button-add-goal" ng-if="!showAddGoal(goal)" ng-click="removeGoal(goal)" tabIndex="{{goal.id + 3}}">
+        <button class="btn btn-primary button-remove-goal" ng-if="!showAddGoal(goal)" ng-click="removeGoal(goal)" tabIndex="{{goal.id + 2}}">
           <%= embedded_svg "icons/remove.svg" %>
         </button>
-        <button class="btn btn-primary button-add-goal" ng-show="showAddGoal(goal)" ng-click="addGoal()" tabIndex="{{goal.id + 3}}">
+        <button class="btn btn-primary button-add-goal" ng-show="showAddGoal(goal)" ng-click="addGoal()" tabIndex="{{goal.id + 2}}">
           <%= embedded_svg "icons/add.svg" %>
         </button>
         <span><input
@@ -25,20 +25,22 @@
           required
           ng-model="goal.activity"
           placeholder="Enter goal or activity"
-          tabIndex="{{goal.id + 2}}"></span>
+          tabIndex="{{goal.id + 3}}"></span>
       </div>
       <div class="form-group">
         <button
+          type="submit"
           class="btn btn-primary"
           ng-disabled="newIssueForm.$invalid"
           tabIndex="{{patient.careplan.newIssue.goals.length + 3}}">Submit</button>
       </div>
     </form>
   </div>
-  <div ng-repeat="issue in patient.careplan.issues">
-    <p><strong>{{issue.name}}</strong></p>
-    <ul>
-      <li ng-repeat="goal in issue.goals"><p>{{goal.activity}}</p></li>
-    </ul>
+
+  <div class="careplan-issues">
+    <div class="patient-issue-repeat" ng-repeat="issue in patient.careplan.issues">
+      <p><strong>{{issue.name}}</strong></p>
+      <p class="issue-activity" ng-repeat="goal in issue.goals">{{goal.activity}}</p>
+    </div>
   </div>
 </div>

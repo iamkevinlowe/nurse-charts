@@ -1,8 +1,15 @@
 <div class="tab-content" ng-show="isHistoryTabActive">
-  <div class="history-box" ng-repeat="report in patient.reports">
-    <p><strong>{{report.user.proper_name}}</strong></p>
-    <p>{{formatDate(report.created_at)}}</p>
-    <p>{{report.issue.name}}</p>
-    <p>{{report.notes}}</p>
+  <div class="clearfix patient-issue-repeat" ng-repeat="report in patient.reports">
+    <p>
+      <span class="pull-left">
+        <strong>{{formatDate(report.created_at)}}</strong>
+        &#151;
+        {{report.issue.name}}
+      </span>
+      <span class="pull-right">
+        <strong>{{report.user.proper_name}}</strong>
+      </span>
+    </p>
+    <p class="clear-both notes">{{report.notes}}</p>
   </div>
 </div>

@@ -1,3 +1,61 @@
-<div class="tab-content" ng-show="isVitalsTabActive">
-  Vitals
+<div class="tab-content vitals-tab-content" ng-show="isVitalsTabActive" ng-controller="PatientViewVitalsController" ng-init="init()">
+
+  <button class="btn btn-primary" ng-click="onToggleVitalsClick()">
+    <span ng-if="isVitalsGraphActive">Take Vitals</span>
+    <span ng-if="isVitalsFormActive">Show Graph</span>
+  </button>
+
+  <div class="new-vitals-form" ng-show="isVitalsFormActive">
+    <form name="newVitalsForm" ng-submit="onNewVitalsSubmit(newVitalsForm.$valid)" novalidate>
+      <div class="row form-group">
+        <div class="col-sm-3">
+          <h5 class="vitals-label">Vital Type</h5>
+        </div>
+        <div class="col-sm-9">
+          <select
+            name="type"
+            class="form-control"
+            ng-options="type for type in vitalTypes"
+            ng-model="newVitals.type">
+          </select>
+        </div>
+      </div>
+      <div class="row form-group" ng-show="newVitals.type == vitalTypes[0]">
+        <div class="col-sm-3">
+          <h5 class="vitals-label">Temperature</h5>
+        </div>
+        <div class="col-sm-6">
+          <input
+            type="text"
+            name="temperature"
+            class="form-control"
+            ng-pattern="/^[0-9]$/"
+            ng-model="newVitals.temperature">
+        </div>
+        <div class="col-sm-3">
+          <button class="btn btn-default" ng-click="onToggleTempClick()">
+            <span ng-if="isCelsiusSelected">Celsius</span>
+            <span ng-if="!isCelsiusSelected">Fahrenheit</span>
+          </button>
+        </div>
+        Body Temperature
+      </div>
+      <div class="row form-group" ng-show="newVitals.type == vitalTypes[1]">
+        Pulse Rate
+      </div>
+      <div class="row form-group" ng-show="newVitals.type == vitalTypes[2]">
+        Respiration Rate
+      </div>
+      <div class="row form-group" ng-show="newVitals.type == vitalTypes[3]">
+        Blood Pressure
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" ng-disabled="newVitalsForm.$invalid">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="vitals-graph" ng-show="isVitalsGraphActive">
+    Vitals Graph
+  </div>
 </div>

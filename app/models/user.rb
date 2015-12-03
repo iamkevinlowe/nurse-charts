@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :reports
 
   def proper_name
-    "#{role.capitalize} - #{first_name} #{last_name}"
+    "#{role.capitalize}, #{first_name} #{last_name}"
   end
 
   def as_json(options = {})

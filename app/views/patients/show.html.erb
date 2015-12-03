@@ -31,14 +31,14 @@
             <span>Report</span>
           </a>
         </li>
-        <li class="tab" ng-class="{ active: isHistoryTabActive }">
-          <a href="#" ng-click="onTabClick('history', $event)">
-            <span>History</span>
-          </a>
-        </li>
         <li class="tab" ng-class="{ active: isVitalsTabActive }">
           <a href="#" ng-click="onTabClick('vitals', $event)">
             <span>Vitals</span>
+          </a>
+        </li>
+        <li class="tab" ng-class="{ active: isHistoryTabActive }">
+          <a href="#" ng-click="onTabClick('history', $event)">
+            <span>History</span>
           </a>
         </li>
       </ul>
@@ -46,8 +46,8 @@
 
     <%= render partial: "patients/components/careplan" %> 
     <%= render partial: "patients/components/report" %>
-    <%= render partial: "patients/components/history" %>
     <%= render partial: "patients/components/vitals" %>
+    <%= render partial: "patients/components/history" %>
   </div>
   
 </div>

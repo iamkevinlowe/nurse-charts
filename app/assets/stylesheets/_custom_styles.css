@@ -105,6 +105,10 @@ svg {
   border-color: rgb(237,247,242);
 }
 
+.btn-default * {
+  color: rgb(76,182,194);
+}
+
 .users-list {
   width: 1760px;
   margin: 20px auto;
@@ -261,14 +265,18 @@ svg {
   margin-bottom: 15px;
 }
 
-.new-plan-form form div .button-add-goal {
-  height: 32px;
-  margin-left: 15px;
-  float: right;
+.new-plan-form form div {
+  .button-add-goal, .button-remove-goal {
+    height: 32px;
+    margin-right: 15px;
+    float: left;
+  }
 }
 
-.new-plan-form form div .button-add-goal svg {
-  margin: -3px;
+.new-plan-form form div {
+  .button-add-goal svg, .button-remove-goal svg {
+    margin: -3px;
+  }
 }
 
 .new-plan-form form div span {
@@ -276,11 +284,43 @@ svg {
   overflow: hidden;
 }
 
-.report-label {
+.issue-activity {
+  padding-left: 20px;
+}
+
+.report-label, .vitals-label {
   font-weight: bold;
   text-align: right;
 }
 
-.history-box:not(:last-child) {
+.patient-issue-repeat {
+  padding-top: 10px;
+}
+
+.patient-issue-repeat:nth-child(even) {
+  background: rgb(104,204,216);
+  background: -webkit-linear-gradient(right, rgb(76,182,194), rgb(104,204,216), rgb(76,182,194));
+  background: -o-linear-gradient(right, rgb(76,182,194), rgb(104,204,216), rgb(76,182,194));
+  background: -moz-linear-gradient(right, rgb(76,182,194), rgb(104,204,216), rgb(76,182,194));
+  background: linear-gradient(to right, rgb(76,182,194), rgb(104,204,216), rgb(76,182,194));
+}
+
+.patient-issue-repeat:not(:last-child) {
   border-bottom: 1px solid rgb(237,247,242);
+}
+
+.patient-issue-repeat .notes {
+  padding: 10px 0 0 20px;
+}
+
+.clear-both {
+  clear: both;
+}
+
+.new-plan-form, .report-tab-content, .vitals-tab-content {
+  text-align: right;
+}
+
+.new-vitals-form {
+  margin-top: 15px;
 }
