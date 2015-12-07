@@ -37,6 +37,27 @@
       $scope.isCelsiusSelected = $scope.isCelsiusSelected ? false : true;
     };
 
+    $scope.onNewVitalsSubmit = function(valid) {
+      if (valid) {
+        switch ($scope.newVitals.type) {
+          case $scope.vitalTypes[0]:
+            console.log($scope.newVitals);
+            break;
+          case $scope.vitalTypes[1]:
+            // TODO
+            break;
+          case $scope.vitalTypes[2]:
+            // TODO
+            break;
+          case $scope.vitalTypes[3]:
+            // TODO
+            break;
+          default:
+            console.log("Error: vital type is out of bounds.");         
+        }
+      }
+    };
+
     function resetNewVitals() {
       $scope.newVitals = {
         type: $scope.vitalTypes[0]
