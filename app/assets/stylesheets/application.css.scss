@@ -14,10 +14,10 @@
  *= require_self
  */
 
-/*
-* @import url(https://fonts.googleapis.com/css?family=Istok+Web:400,700);
-*
-*/ $font-family-base: 'Istok Web';
+
+@import url(https://fonts.googleapis.com/css?family=Istok+Web:400,700);
+
+$font-family-base: 'Istok Web';
 
 @import "bootstrap-sprockets";
 @import "bootstrap";

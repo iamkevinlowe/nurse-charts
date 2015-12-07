@@ -105,7 +105,7 @@ svg {
   border-color: rgb(237,247,242);
 }
 
-.btn-default * {
+.btn.btn-default * {
   color: rgb(76,182,194);
 }
 
@@ -265,18 +265,14 @@ svg {
   margin-bottom: 15px;
 }
 
-.new-plan-form form div {
-  .button-add-goal, .button-remove-goal {
-    height: 32px;
-    margin-right: 15px;
-    float: left;
-  }
+.new-plan-form form div .button-add-goal, .new-plan-form form div .button-remove-goal {
+  height: 32px;
+  margin-right: 15px;
+  float: left;
 }
 
-.new-plan-form form div {
-  .button-add-goal svg, .button-remove-goal svg {
-    margin: -3px;
-  }
+.new-plan-form form div .button-add-goal svg, .new-plan-form form div .button-remove-goal svg{
+  margin: -3px;
 }
 
 .new-plan-form form div span {
