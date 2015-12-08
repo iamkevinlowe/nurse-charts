@@ -28,6 +28,11 @@ Rails.application.routes.draw do
     resources :reports, only: :create
     resources :patients, only: [:index, :show, :create]
     post 'patients/find', to: 'patients#find'
+    resources :vitals, only: :create
+    resources :temperatures, only: :create
+    resources :pulse_rates, only: :create
+    resources :respiration_rates, only: :create
+    resources :blood_pressures, only: :create
   end
 
 end

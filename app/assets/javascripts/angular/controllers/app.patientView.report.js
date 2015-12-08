@@ -12,6 +12,8 @@
     ReportsService
   ) {
 
+    $scope.newReport = {};
+
     $scope.init = function() {
       $scope.$watchGroup(['patient.careplan.issues.length', 'currentUser'], function(newValues, oldValues) {
         if (newValues[0] && newValues[1]) {
@@ -19,7 +21,7 @@
             report = addAssociations(report);
           });
 
-          resetNewReport();
+          newReport();
         }
       });
     };
@@ -27,11 +29,13 @@
     $scope.onNewReportSubmit = function(valid) {
       if (valid) {
         ReportsService.save(
-          { report: $scope.patient.newReport },
+          {
+            report: $scope.newReport
+          },
           function onSuccess(response) {
             $scope.patient.reports.unshift(addAssociations(response));
 
-            resetNewReport();
+            newReport();
           },
           function onError(response) {
             console.log('Error', response);
@@ -41,12 +45,17 @@
     };
 
     function addAssociations(report) {
-      $scope.patient.careplan.issues.some(function(issue) {
-        if (issue.id == report.issue_id) {
-          report.issue = issue;
-          return true;
-        }
-      });
+      if (report.activity_type == 'Issue') {
+        $scope.patient.careplan.issues.some(function(issue) {
+          if (issue.id == report.activity_id) {
+            report.activity = issue;
+            return true;
+          }
+        });
+      } else if (report.activity_type == 'Vital') {
+        report.activity = { name: 'Vitals Reading' };
+      }
+      
 
       $scope.users.some(function(user) {
         if (user.id == report.user_id) {
@@ -58,11 +67,12 @@
       return report;
     }
 
-    function resetNewReport() {
-      $scope.patient.newReport = {
+    function newReport() {
+      $scope.newReport = {
         patient_id: $scope.patient.id,
         user_id: $scope.currentUser.id,
-        issue_id: $scope.patient.careplan.issues[0].id,
+        activity_id: $scope.patient.careplan.issues[0].id,
+        activity_type: 'Issue',
         alert: null,
         notes: null
       };

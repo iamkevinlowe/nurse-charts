@@ -1,7 +1,8 @@
 class Api::ReportsController < ApplicationController
+  before_filter :find_activity
 
   def create
-    report = Report.new(report_params)
+    report = @activity.reports.build(report_params)
     authorize report
     report.save
     render json: report
@@ -9,8 +10,12 @@ class Api::ReportsController < ApplicationController
 
   private
 
-  def report_params
-    params.require(:report).permit(:patient_id, :user_id, :issue_id, :alert, :notes)
+  def find_activity
+    klass = params[:report][:activity_type].capitalize.constantize
+    @activity = klass.find(params[:report][:activity_id])
   end
 
+  def report_params
+    params.require(:report).permit(:patient_id, :user_id, :alert, :notes)
+  end
 end

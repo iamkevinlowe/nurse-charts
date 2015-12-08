@@ -16,6 +16,8 @@
     GoalsService
   ) {
 
+    $scope.newIssue = {};
+
     $scope.init = function() {
       $scope.$watchGroup(['patient', 'currentUser'], function(newValues, oldValues) {
         if (newValues[0] && newValues[1] && newValues[1].role == 'doctor') {
@@ -25,11 +27,11 @@
     };
 
     $scope.addGoal = function() {
-      $scope.patient.careplan.newIssue.goals.push({id: $scope.patient.careplan.newIssue.goals.length});
+      $scope.newIssue.goals.push({id: $scope.newIssue.goals.length});
     };
 
     $scope.removeGoal = function(goal) {
-      var goals = $scope.patient.careplan.newIssue.goals;
+      var goals = $scope.newIssue.goals;
       var i = goals.indexOf(goal);
       goals.splice(i, 1);
       for (; i < goals.length; i++) {
@@ -38,13 +40,13 @@
     };
 
     $scope.showAddGoal = function(goal) {
-      return goal.id == $scope.patient.careplan.newIssue.goals.length - 1;
+      return goal.id == $scope.newIssue.goals.length - 1;
     };
 
     $scope.onNewIssueSubmit = function(valid) {
       if (valid) {
-        $scope.patient.careplan.newIssue.careplan_id = $scope.patient.careplan.id;
-        createIssue(angular.copy($scope.patient.careplan.newIssue));
+        $scope.newIssue.careplan_id = $scope.patient.careplan.id;
+        createIssue(angular.copy($scope.newIssue));
       }
     };
 
@@ -54,8 +56,8 @@
           careplan: { patient_id: id }
         },
         function onSuccess(response) {
+          response.issues = [];
           $scope.patient.careplan = response;
-          $scope.patient.careplan.issues = [];
           newIssue();
         },
         function onError(response) {
@@ -71,7 +73,7 @@
           response.goals = [];
           $scope.patient.careplan.issues.push(response);
           
-          $scope.patient.careplan.newIssue.goals.forEach(function(goal) {
+          $scope.newIssue.goals.forEach(function(goal) {
             goal.issue_id = response.id;
             createGoal(angular.copy(goal));
           });
@@ -89,7 +91,7 @@
           var issue = $scope.patient.careplan.issues[$scope.patient.careplan.issues.length - 1];
           issue.goals.push(response);
 
-          if (issue.goals.length == $scope.patient.careplan.newIssue.goals.length) {
+          if (issue.goals.length == $scope.newIssue.goals.length) {
             newIssue();
           }
         },
@@ -100,7 +102,7 @@
     }
 
     function newIssue() {
-      $scope.patient.careplan.newIssue = {
+      $scope.newIssue = {
         goals: [{ id: 0 }]
       };
     }

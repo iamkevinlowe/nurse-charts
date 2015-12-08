@@ -1,8 +1,9 @@
 class CreateReports < ActiveRecord::Migration
   def change
     create_table :reports do |t|
-      t.references :issue, index: true, foreign_key: true
+      t.references :activity, index: true, polymorphic: true
       t.references :patient, index: true, foreign_key: true
+      t.references :user, index: true, foreign_key: true
       t.integer :alert
       t.text :notes
 

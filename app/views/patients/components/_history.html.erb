@@ -4,7 +4,7 @@
       <span class="pull-left">
         <strong>{{formatDate(report.created_at)}}</strong>
         &#151;
-        {{report.issue.name}}
+        {{report.activity.name}}
       </span>
       <span class="pull-right">
         <strong>{{report.user.proper_name}}</strong>
@@ -12,4 +12,7 @@
     </p>
     <p class="clear-both notes">{{report.notes}}</p>
   </div>
+  <p ng-show="patient.reports.length <= 0">
+    There are no reports for {{patient.first_name}} yet.
+  </p>
 </div>

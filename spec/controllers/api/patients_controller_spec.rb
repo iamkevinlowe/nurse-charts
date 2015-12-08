@@ -32,8 +32,8 @@ RSpec.describe Api::PatientsController, type: :controller do
       { patient: {
           first_name: Faker::Name.first_name,
           last_name: Faker::Name.last_name,
-          hospital_id: (rand() * 50 + 1).floor,
-          room_number: (rand() * 300 + 1).floor,
+          hospital_id: (rand * 50 + 1).floor,
+          room_number: (rand * 300 + 1).floor,
           email: Faker::Internet.safe_email,
           password: Faker::Lorem.characters(8),
           role: 'nurse'
@@ -138,7 +138,7 @@ def new_patient
   Patient.new(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
-    hospital_id: (rand() + 50 + 1).floor,
-    room_number: (rand() + 300 + 1).floor
+    hospital_id: (rand + 50 + 1).floor,
+    room_number: (rand + 300 + 1).floor
   )
 end

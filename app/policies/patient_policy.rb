@@ -5,11 +5,15 @@ class PatientPolicy < ApplicationPolicy
   end
 
   def show?
-    doctor? || admin?
+    if nurse?
+      record.hospital_id == user.hospital_id
+    else
+      create?
+    end
   end
 
   def create?
-    show?
+    doctor? || admin?
   end
 
   class Scope < Scope

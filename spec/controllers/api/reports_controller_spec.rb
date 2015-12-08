@@ -30,15 +30,15 @@ RSpec.describe Api::ReportsController, type: :controller do
   context "params" do
     let(:params) do
       { report: {
-          patient_id: rand() * 50 + 1,
-          user_id: rand() * 50 + 1,
-          careplan_id: rand() * 50 + 1,
-          issue_id: rand() * 50 + 1,
-          goal_id: rand() * 50 + 1,
-          report_id: rand() * 50 + 1,
+          patient_id: (rand * 50 + 1).floor,
+          user_id: (rand * 50 + 1).floor,
+          careplan_id: (rand * 50 + 1).floor,
+          issue_id: (rand * 50 + 1).floor,
+          goal_id: (rand * 50 + 1).floor,
+          report_id: (rand * 50 + 1).floor,
           activity: Faker::Lorem.word,
           name: Faker::Lorem.word,
-          alert: rand() * 50 + 1,
+          alert: (rand * 50 + 1).floor,
           notes: Faker::Lorem.paragraph
         }
       }
@@ -84,10 +84,10 @@ end
 
 def new_report
   Report.new(
-    patient_id: 10,
-    user_id: 20,
-    issue_id: 30,
-    alert: 40,
-    notes: "Here are notes"
+    patient_id: (rand * 50 + 1).floor,
+    user_id: (rand * 50 + 1).floor,
+    issue_id: (rand * 50 + 1).floor,
+    alert: (rand * 50 + 1).floor,
+    notes: Faker::Lorem.paragraph
   )
 end

@@ -30,15 +30,15 @@ RSpec.describe Api::CareplansController, type: :controller do
   context "params" do
     let(:params) do
       { careplan: {
-          patient_id: (rand() * 50 + 1).floor,
-          user_id: (rand() * 50 + 1).floor,
-          careplan_id: (rand() * 50 + 1).floor,
-          issue_id: (rand() * 50 + 1).floor,
-          goal_id: (rand() * 50 + 1).floor,
-          report_id: (rand() * 50 + 1).floor,
+          patient_id: (rand * 50 + 1).floor,
+          user_id: (rand * 50 + 1).floor,
+          careplan_id: (rand * 50 + 1).floor,
+          issue_id: (rand * 50 + 1).floor,
+          goal_id: (rand * 50 + 1).floor,
+          report_id: (rand * 50 + 1).floor,
           activity: Faker::Lorem.word,
           name: Faker::Lorem.word,
-          alert: (rand() * 50 + 1).floor,
+          alert: (rand * 50 + 1).floor,
           notes: Faker::Lorem.paragraph
         }
       }
@@ -81,6 +81,6 @@ end
 
 def new_careplan
   Careplan.new(
-    patient_id: (rand() * 50 + 1).floor
+    patient_id: (rand * 50 + 1).floor
   )
 end

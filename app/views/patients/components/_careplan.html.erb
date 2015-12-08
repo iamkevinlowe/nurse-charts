@@ -7,11 +7,11 @@
           name="name"
           class="form-control"
           required
-          ng-model="patient.careplan.newIssue.name"
+          ng-model="newIssue.name"
           placeholder="Enter the issue"
           tabIndex="1">
       </div>
-      <div class="form-group" ng-repeat="goal in patient.careplan.newIssue.goals">
+      <div class="form-group" ng-repeat="goal in newIssue.goals">
         <button class="btn btn-primary button-remove-goal" ng-if="!showAddGoal(goal)" ng-click="removeGoal(goal)" tabIndex="{{goal.id + 2}}">
           <%= embedded_svg "icons/remove.svg" %>
         </button>
@@ -32,7 +32,7 @@
           type="submit"
           class="btn btn-primary"
           ng-disabled="newIssueForm.$invalid"
-          tabIndex="{{patient.careplan.newIssue.goals.length + 3}}">Submit</button>
+          tabIndex="{{newIssue.goals.length + 3}}">Submit</button>
       </div>
     </form>
   </div>
@@ -42,5 +42,9 @@
       <p><strong>{{issue.name}}</strong></p>
       <p class="issue-activity" ng-repeat="goal in issue.goals">{{goal.activity}}</p>
     </div>
+
+    <p ng-show="!patient.careplan">
+      The careplan has not been created for {{patient.first_name}} yet.
+    </p>
   </div>
 </div>

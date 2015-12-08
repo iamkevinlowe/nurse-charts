@@ -32,8 +32,8 @@ RSpec.describe Api::UsersController, type: :controller do
       { user: {
         first_name: Faker::Name.first_name,
         last_name: Faker::Name.last_name,
-        hospital_id: rand() * 50 + 1,
-        room_number: rand() * 300 + 1,
+        hospital_id: (rand * 50 + 1).floor,
+        room_number: (rand * 300 + 1).floor,
         email: Faker::Internet.safe_email,
         password: Faker::Lorem.characters(8),
         role: 'nurse'

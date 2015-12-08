@@ -1,7 +1,7 @@
 class UserPolicy < ApplicationPolicy
 
   def index?
-    doctor? || admin?
+    doctor? || nurse? || admin?
   end
 
   def show?
@@ -9,7 +9,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def create?
-    index?
+    doctor? || admin?
   end
 
   class Scope < Scope

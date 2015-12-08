@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201220212) do
+ActiveRecord::Schema.define(version: 20151208173957) do
+
+  create_table "blood_pressures", force: :cascade do |t|
+    t.integer  "vital_id"
+    t.float    "systolic"
+    t.float    "diastolic"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "blood_pressures", ["vital_id"], name: "index_blood_pressures_on_vital_id"
 
   create_table "careplans", force: :cascade do |t|
     t.integer  "patient_id"
@@ -57,19 +67,47 @@ ActiveRecord::Schema.define(version: 20151201220212) do
 
   add_index "patients", ["hospital_id"], name: "index_patients_on_hospital_id"
 
-  create_table "reports", force: :cascade do |t|
-    t.integer  "issue_id"
-    t.integer  "patient_id"
-    t.integer  "alert"
-    t.text     "notes"
+  create_table "pulse_rates", force: :cascade do |t|
+    t.integer  "vital_id"
+    t.integer  "bpm"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "user_id"
   end
 
-  add_index "reports", ["issue_id"], name: "index_reports_on_issue_id"
+  add_index "pulse_rates", ["vital_id"], name: "index_pulse_rates_on_vital_id"
+
+  create_table "reports", force: :cascade do |t|
+    t.integer  "activity_id"
+    t.string   "activity_type"
+    t.integer  "patient_id"
+    t.integer  "user_id"
+    t.integer  "alert"
+    t.text     "notes"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "reports", ["activity_type", "activity_id"], name: "index_reports_on_activity_type_and_activity_id"
   add_index "reports", ["patient_id"], name: "index_reports_on_patient_id"
   add_index "reports", ["user_id"], name: "index_reports_on_user_id"
+
+  create_table "respiration_rates", force: :cascade do |t|
+    t.integer  "vital_id"
+    t.integer  "bpm"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "respiration_rates", ["vital_id"], name: "index_respiration_rates_on_vital_id"
+
+  create_table "temperatures", force: :cascade do |t|
+    t.integer  "vital_id"
+    t.float    "celsius"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "temperatures", ["vital_id"], name: "index_temperatures_on_vital_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
@@ -91,5 +129,13 @@ ActiveRecord::Schema.define(version: 20151201220212) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["hospital_id"], name: "index_users_on_hospital_id"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "vitals", force: :cascade do |t|
+    t.integer  "patient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "vitals", ["patient_id"], name: "index_vitals_on_patient_id"
 
 end
