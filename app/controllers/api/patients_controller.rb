@@ -15,11 +15,22 @@ class Api::PatientsController < ApplicationController
       params[:last_name],
       params[:room_number]
     ).first
-    patient ? (render json: patient) : (head :no_content)
+
+    if patient
+      render json: patient
+    else
+      render json: { error: "Could not find patient." }, status: 404
+    end
   end
 
   def show
-    patient = Patient.find(params[:id])
+    begin
+      patient = Patient.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      render json: { error: e.message }, status: 404
+      return
+    end
+
     authorize patient
     render json: patient
   end

@@ -67,7 +67,12 @@
           $scope.onTabClick('careplan');
         },
         function onError(response) {
-          console.log('Error', response);
+          if (response.status == 404) {
+            // TODO: handle case where no patient from id is found
+            console.log(response.data.error);
+          } else {
+            console.log('Error', response);
+          }
         }
       );
     }

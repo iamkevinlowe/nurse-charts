@@ -63,14 +63,15 @@
         PatientsFindService.find(
           $scope.patient,
           function onSuccess(response) {
-            if (response.id) {
-              $window.location.href = '/patients/' + response.id
-            } else {
-              console.log("No result");
-            }
+            $window.location.href = '/patients/' + response.id;
           },
           function onError(response) {
-            console.log('Error', response);
+            if (response.status == 404) {
+              // TODO: handle case when no patient found
+              console.log(response.data.error);
+            } else {
+              console.log('Error', response);
+            }
           }
         );
       }

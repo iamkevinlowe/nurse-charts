@@ -1,6 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe Api::IssuesController, type: :controller do
+  before :all do
+    clear_db
+
+    @user = User.create!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      email: Faker::Internet.safe_email,
+      password: Faker::Lorem.characters(8),
+      role: 'doctor'
+    )
+
+    @issues = []
+    5.times { @issues << new_issue }
+    @issues.each { |i| i.save }
+  end
+
+  before { sign_in @user }
 
   context "routes" do
     it { should route(:post, '/api/issues').to(action: :create) }
@@ -11,44 +28,61 @@ RSpec.describe Api::IssuesController, type: :controller do
   end
 
   context "params" do
-    
-    before :example do
-      @user = User.create!(
-        first_name: Faker::Name.first_name,
-        last_name: Faker::Name.last_name,
-        email: Faker::Internet.safe_email,
-        password: Faker::Lorem.characters(8),
-        role: 'doctor'
-      )
-      @params = {
-        issue: {
-          patient_id: rand() * 50 + 1,
-          user_id: rand() * 50 + 1,
-          careplan_id: rand() * 50 + 1,
-          issue_id: rand() * 50 + 1,
-          goal_id: rand() * 50 + 1,
-          report_id: rand() * 50 + 1,
+    let(:params) do
+      { issue: {
+          patient_id: (rand() * 50 + 1).floor,
+          user_id: (rand() * 50 + 1).floor,
+          careplan_id: (rand() * 50 + 1).floor,
+          issue_id: (rand() * 50 + 1).floor,
+          goal_id: (rand() * 50 + 1).floor,
+          report_id: (rand() * 50 + 1).floor,
           activity: Faker::Lorem.word,
           name: Faker::Lorem.word,
-          alert: rand() * 50 + 1,
+          alert: (rand() * 50 + 1).floor,
           notes: Faker::Lorem.paragraph
         }
       }
     end
 
     it "permits attributes" do
-      sign_in @user
       should permit(:careplan_id, :name)
-        .for(:create, params: @params)
+        .for(:create, params: params)
         .on(:issue)
     end
 
     it "does not permit attributes" do
-      sign_in @user
       should_not permit(:patient_id, :user_id, :issue_id, :goal_id, :report_id, :activity, :alert, :notes)
-        .for(:create, params: @params)
+        .for(:create, params: params)
         .on(:issue)
     end
   end
 
+  describe "#create" do
+    let(:issue) { new_issue }
+
+    before { post :create, issue: issue.as_json, format: :json }
+
+    it "returns the issue's response" do
+      parsed_json = JSON.parse(response.body)
+
+      expect(parsed_json['careplan_id']).to eql(issue.careplan_id)
+      expect(parsed_json['name']).to eql(issue.name)
+    end
+
+    it "increments the issues array" do
+      expect(Issue.all.count).to eql(@issues.count + 1)
+    end
+  end
+end
+
+def clear_db
+  User.all.delete_all
+  Issue.all.delete_all
+end
+
+def new_issue
+  Issue.new(
+    careplan_id: (rand() * 50 + 1).floor,
+    name: Faker::Lorem.word
+  )
 end

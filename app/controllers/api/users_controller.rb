@@ -7,7 +7,13 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    user = User.find(params[:id])
+    begin
+      user = User.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      render json: { error: e.message }, status: 404
+      return
+    end
+    
     authorize user
     render json: user
   end
