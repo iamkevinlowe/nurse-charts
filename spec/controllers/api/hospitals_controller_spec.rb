@@ -2,8 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Api::HospitalsController, type: :controller do
   before do
-    clear_db
-
     @user = User.create!(
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
@@ -34,11 +32,6 @@ RSpec.describe Api::HospitalsController, type: :controller do
       expect(parsed_json.count).to eql(@hospitals.count)
     end
   end
-end
-
-def clear_db
-  User.all.delete_all
-  Hospital.all.delete_all
 end
 
 def new_hospital

@@ -2,8 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Api::GoalsController, type: :controller do
   before :all do
-    clear_db
-
     @user = User.create!(
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
@@ -73,11 +71,6 @@ RSpec.describe Api::GoalsController, type: :controller do
       expect(Goal.all.count).to eql(@goals.count + 1)
     end
   end
-end
-
-def clear_db
-  User.all.delete_all
-  Goal.all.delete_all
 end
 
 def new_goal

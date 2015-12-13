@@ -1,0 +1,113 @@
+<div class="new-vitals-form" ng-show="isVitalsFormActive">
+  <form name="newVitalsForm" ng-submit="onNewVitalsSubmit(newVitalsForm.$dirty)" novalidate>
+    <div class="row form-group">
+      <div class="col-sm-3">
+        <h5 class="vitals-label">Vital Type</h5>
+      </div>
+      <div class="col-sm-9">
+        <select
+          name="type"
+          class="form-control"
+          ng-options="type for type in vitalTypes"
+          ng-model="newReading.type">
+        </select>
+      </div>
+    </div>
+
+    <div class="row form-group" ng-show="newReading.type == vitalTypes[0]">
+      <div class="col-sm-3">
+        <h5 class="vitals-label">Temperature</h5>
+      </div>
+      <div class="col-sm-6">
+        <input
+          type="text"
+          name="temperature"
+          class="form-control"
+          required
+          ng-pattern="/^\d{2,3}(\.\d{1})?$/"
+          ng-model="newReading.temperature">
+      </div>
+      <div class="col-sm-3">
+        <button type="button" class="btn btn-default" ng-click="onToggleTempClick()">
+          <span ng-if="isCelsiusSelected">Celsius</span>
+          <span ng-if="!isCelsiusSelected">Fahrenheit</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row form-group" ng-show="newReading.type == vitalTypes[1]">
+      <div class="col-sm-3">
+        <h5 class="vitals-label">Pulse Rate</h5>
+      </div>
+      <div class="col-sm-6">
+        <input
+          type="text"
+          name="pulseRate"
+          class="form-control"
+          required
+          ng-pattern="/^\d{2,3}$/"
+          ng-model="newReading.pulseRate">
+      </div>
+      <div class="col-sm-3">
+        <h5 class="text-left">Beats per Minute</h5>
+      </div>
+    </div>
+
+    <div class="row form-group" ng-show="newReading.type == vitalTypes[2]">
+      <div class="col-sm-3">
+        <h5 class="vitals-label">Respiration Rate</h5>
+      </div>
+      <div class="col-sm-6">
+        <input
+          type="text"
+          name="respirationRate"
+          class="form-control"
+          required
+          ng-pattern="/^\d{1,2}$/"
+          ng-model="newReading.respirationRate">
+      </div>
+      <div class="col-sm-3">
+        <h5 class="text-left">Breaths per Minute</h5>
+      </div>
+    </div>
+
+    <div ng-show="newReading.type == vitalTypes[3]">
+      <div class="row form-group">          
+        <div class="col-sm-3">
+          <h5 class="vitals-label">Blood Pressure</h5>
+        </div>
+        <div class="col-sm-6">
+          <input
+            type="text"
+            name="systolic"
+            class="form-control"
+            required
+            ng-pattern="/^\d{2,3}$/"
+            ng-model="newReading.bloodPressure.systolic">
+        </div>
+        <div class="col-sm-3">
+          <h5 class="text-left">mmHg, Systolic</h5>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-sm-6 col-sm-offset-3">
+          <input
+            type="text"
+            name="diastolic"
+            class="form-control"
+            required
+            ng-pattern="/^\d{2,3}(\.\d{1})?$/"
+            ng-model="newReading.bloodPressure.diastolic">
+        </div>
+        <div class="col-sm-3">
+          <h5 class="text-left">mmHg, Diastolic</h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" ng-disabled="submitButtonDisabler(newVitalsForm)">Submit</button>
+    </div>
+  </form>
+</div>

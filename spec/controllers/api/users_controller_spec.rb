@@ -2,8 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Api::UsersController, type: :controller do
   before :all do
-    clear_db
-
     @user = User.create!(
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
@@ -12,10 +10,7 @@ RSpec.describe Api::UsersController, type: :controller do
       role: 'doctor'
     )
 
-    @users = []
-    5.times { @users << new_user }
-    @users.each { |u| u.save }
-    @users.unshift(@user)
+    @users = User.all
   end
 
   before { sign_in @user }
@@ -102,13 +97,9 @@ RSpec.describe Api::UsersController, type: :controller do
     end
 
     it "increments the users array" do
-      expect(User.all.count).to eql (@users.count + 1)
+      expect(User.all.count).to eql (@users.count)
     end
   end
-end
-
-def clear_db
-  User.all.delete_all
 end
 
 def new_user

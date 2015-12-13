@@ -2,8 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Api::IssuesController, type: :controller do
   before :all do
-    clear_db
-
     @user = User.create!(
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
@@ -73,11 +71,6 @@ RSpec.describe Api::IssuesController, type: :controller do
       expect(Issue.all.count).to eql(@issues.count + 1)
     end
   end
-end
-
-def clear_db
-  User.all.delete_all
-  Issue.all.delete_all
 end
 
 def new_issue

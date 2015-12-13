@@ -2,8 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Api::PatientsController, type: :controller do
   before :all do
-    clear_db
-
     @user = User.create!(
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
@@ -127,11 +125,6 @@ RSpec.describe Api::PatientsController, type: :controller do
       end
     end
   end
-end
-
-def clear_db
-  User.all.delete_all
-  Patient.all.delete_all
 end
 
 def new_patient
